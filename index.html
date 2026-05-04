@@ -47,12 +47,50 @@
       display: none;
     }
 
-    /* Корректная кастомизация Plyr */
+    /* Plyr customization */
     .plyr {
-      border-radius: 12px;
-      overflow: hidden;
       --plyr-color-main: #ff0055;
       --plyr-video-control-color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* Убираем эффект нажатия (ripple/active) на кнопках плеера */
+    .plyr__control:focus,
+    .plyr__control:focus-visible {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .plyr__control::after,
+    .plyr__control::before {
+      display: none !important;
+    }
+
+    .plyr__control:active {
+      transform: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      opacity: 1 !important;
+    }
+
+    /* Убираем ripple-эффект у кнопки play-large */
+    .plyr__control--overlaid:active,
+    .plyr__control--overlaid:focus {
+      transform: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    /* Убираем эффект при нажатии на прогресс-бар */
+    .plyr__progress input[type=range]::-webkit-slider-thumb:active {
+      box-shadow: none !important;
+    }
+
+    /* Отключаем выделение текста/элементов при клике */
+    .plyr {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
   </style>
 </head>
@@ -72,50 +110,74 @@
     const loader = document.getElementById('loader');
 
     let loading = false;
-    let allVideosLoaded = false; // флаг завершения загрузки
+    let allVideosLoaded = false;
 
-    // Статический список видео (замените на реальные данные или API)
     const videos = [
       { title: "Big Buck Bunny", url: "https://videotourl.com/videos/1776258938636-84af6068-252d-4857-bf60-c7841625d5b1.mp4" },
       { title: "Sample Video", url: "https://videotourl.com/videos/1774408888308-289df404-1679-4bd5-b8ca-c802e53cab99.mp4" }
     ];
 
-    // Создание HTML-карточки видео
+    // Хранилище экземпляров Plyr
+    const players = [];
+
     function createVideo(videoData) {
       const card = document.createElement('div');
       card.className = 'video-card';
-      card.innerHTML = `
-        <video class="player" playsinline preload="metadata">
-          <source src="${videoData.url}" type="video/mp4">
-        </video>
-        <div class="video-info">
-          <h3>${videoData.title}</h3>
-        </div>
-      `;
-      return card;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'plyr__video-wrapper';
+
+      const video = document.createElement('video');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('preload', 'metadata');
+
+      const source = document.createElement('source');
+      source.src = videoData.url;
+      source.type = 'video/mp4';
+
+      video.appendChild(source);
+
+      const info = document.createElement('div');
+      info.className = 'video-info';
+      info.innerHTML = `<h3>${videoData.title}</h3>`;
+
+      card.appendChild(video);
+      card.appendChild(info);
+
+      return { card, video };
     }
 
-    // Инициализация Plyr на всех новых видео
-    function initPlayers() {
-      document.querySelectorAll('.player:not([data-plyr-initialized])').forEach(video => {
-        new Plyr(video, {
-          controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
-        });
-        video.dataset.plyrInitialized = "true";
+    function initPlayer(videoEl) {
+      const player = new Plyr(videoEl, {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        resetOnEnd: false,
+        clickToPlay: true,
+        disableContextMenu: false,
+        keyboard: { focused: true, global: false },
+        tooltips: { controls: false, seek: true },
       });
+
+      // При воспроизведении — ставим все остальные на паузу
+      player.on('play', () => {
+        players.forEach(p => {
+          if (p !== player && !p.paused) {
+            p.pause();
+          }
+        });
+      });
+
+      players.push(player);
+      return player;
     }
 
-    // Загрузка всех видео из массива (однократно)
     async function loadVideos() {
       if (loading || allVideosLoaded) return;
 
       loading = true;
       loader.style.display = 'block';
 
-      // Имитация задержки сети
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Если массив пуст, сразу ставим флаг завершения
       if (videos.length === 0) {
         allVideosLoaded = true;
         loader.style.display = 'none';
@@ -123,21 +185,20 @@
         return;
       }
 
-      // Добавляем все карточки
-      videos.forEach(video => feed.appendChild(createVideo(video)));
+      videos.forEach(videoData => {
+        const { card, video } = createVideo(videoData);
+        feed.appendChild(card);
+        // Инициализируем Plyr сразу после добавления в DOM
+        initPlayer(video);
+      });
 
-      // Инициализируем плееры
-      initPlayers();
-
-      // Отмечаем, что всё загружено
       allVideosLoaded = true;
       loader.style.display = 'none';
       loading = false;
     }
 
-    // Обработчик скролла: подгружаем видео при приближении к низу
     window.addEventListener('scroll', () => {
-      if (allVideosLoaded) return; // если всё загружено — не реагируем
+      if (allVideosLoaded) return;
 
       const scrollBottom = window.innerHeight + window.scrollY;
       const pageBottom = document.body.offsetHeight - 200;
@@ -147,15 +208,6 @@
       }
     });
 
-    // При воспроизведении одного видео ставим остальные на паузу
-    document.addEventListener('play', function (e) {
-      const allVideos = document.querySelectorAll('video');
-      allVideos.forEach(video => {
-        if (video !== e.target) video.pause();
-      });
-    }, true);
-
-    // Первичная загрузка
     loadVideos();
   </script>
 </body>
