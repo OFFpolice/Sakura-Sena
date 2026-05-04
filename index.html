@@ -1,99 +1,166 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sakura Sena | Fans</title>
-<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0e0e0e;color:#fff;font-family:Arial,sans-serif}
-.header{padding:15px;text-align:center;border-bottom:1px solid #222}
-.feed{display:flex;flex-direction:column;gap:20px;padding:15px}
-.video-card{background:#181818;border-radius:12px;overflow:hidden}
-.video-info{padding:10px}
-.loader{text-align:center;padding:20px;display:none}
-.plyr{border-radius:12px;overflow:hidden}
-.plyr--full-ui input[type=range]{color:#ff0055}
-.plyr__control--overlaid{background:rgba(255,0,85,0.8)}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sakura Sena | Fans</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0e0e0e;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #222;
+    }
+
+    .feed {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 15px;
+    }
+
+    .video-card {
+      background: #181818;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .video-info {
+      padding: 10px;
+    }
+
+    .loader {
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+
+    /* Корректная кастомизация Plyr */
+    .plyr {
+      border-radius: 12px;
+      overflow: hidden;
+      --plyr-color-main: #ff0055;
+      --plyr-video-control-color: #ffffff;
+    }
+
+    .plyr__control--overlaid {
+      background: rgba(255, 0, 85, 0.8);
+    }
+  </style>
 </head>
 <body>
+  <div class="app">
+    <header class="header">
+      <h1>Sakura Sena</h1>
+    </header>
 
-<div class="app">
-<header class="header">
-<h1>Sakura Sena</h1>
-</header>
+    <main id="feed" class="feed"></main>
+    <div id="loader" class="loader">Загрузка...</div>
+  </div>
 
-<main id="feed" class="feed"></main>
-<div id="loader" class="loader">Загрузка...</div>
-</div>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+    const feed = document.getElementById('feed');
+    const loader = document.getElementById('loader');
 
-<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-<script>
-const feed=document.getElementById('feed')
-const loader=document.getElementById('loader')
-let page=1
-let loading=false
+    let loading = false;
+    let allVideosLoaded = false; // флаг завершения загрузки
 
-const videos=[
-{title:"Big Buck Bunny",url:"https://videotourl.com/videos/1776258938636-84af6068-252d-4857-bf60-c7841625d5b1.mp4"},
-{title:"Sample Video",url:"https://videotourl.com/videos/1774408888308-289df404-1679-4bd5-b8ca-c802e53cab99.mp4"}
-]
+    // Статический список видео (замените на реальные данные или API)
+    const videos = [
+      { title: "Big Buck Bunny", url: "https://videotourl.com/videos/1776258938636-84af6068-252d-4857-bf60-c7841625d5b1.mp4" },
+      { title: "Sample Video", url: "https://videotourl.com/videos/1774408888308-289df404-1679-4bd5-b8ca-c802e53cab99.mp4" }
+    ];
 
-function createVideo(videoData){
-const card=document.createElement('div')
-card.className='video-card'
-card.innerHTML=`
-<video class="player" playsinline controls preload="metadata">
-<source src="${videoData.url}" type="video/mp4">
-</video>
-<div class="video-info">
-<h3>${videoData.title}</h3>
-</div>`
-return card
-}
+    // Создание HTML-карточки видео
+    function createVideo(videoData) {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.innerHTML = `
+        <video class="player" playsinline preload="metadata">
+          <source src="${videoData.url}" type="video/mp4">
+        </video>
+        <div class="video-info">
+          <h3>${videoData.title}</h3>
+        </div>
+      `;
+      return card;
+    }
 
-function initPlayers(){
-const players=document.querySelectorAll('.player')
-players.forEach(video=>{
-if(!video.dataset.plyrInitialized){
-new Plyr(video,{
-controls:['play-large','play','progress','current-time','mute','volume','fullscreen']
-})
-video.dataset.plyrInitialized="true"
-}
-})
-}
+    // Инициализация Plyr на всех новых видео
+    function initPlayers() {
+      document.querySelectorAll('.player:not([data-plyr-initialized])').forEach(video => {
+        new Plyr(video, {
+          controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+        });
+        video.dataset.plyrInitialized = "true";
+      });
+    }
 
-async function loadVideos(){
-if(loading)return
-loading=true
-loader.style.display='block'
-await new Promise(r=>setTimeout(r,1000))
-videos.forEach(video=>{
-feed.appendChild(createVideo(video))
-})
-initPlayers()
-loader.style.display='none'
-loading=false
-page++
-}
+    // Загрузка всех видео из массива (однократно)
+    async function loadVideos() {
+      if (loading || allVideosLoaded) return;
 
-window.addEventListener('scroll',()=>{
-if(window.innerHeight+window.scrollY>=document.body.offsetHeight-200){
-loadVideos()
-}
-})
+      loading = true;
+      loader.style.display = 'block';
 
-document.addEventListener('play',function(e){
-const vids=document.querySelectorAll('video')
-vids.forEach(v=>{
-if(v!==e.target)v.pause()
-})
-},true)
+      // Имитация задержки сети
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-loadVideos()
-</script>
+      // Если массив пуст, сразу ставим флаг завершения
+      if (videos.length === 0) {
+        allVideosLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      // Добавляем все карточки
+      videos.forEach(video => feed.appendChild(createVideo(video)));
+
+      // Инициализируем плееры
+      initPlayers();
+
+      // Отмечаем, что всё загружено
+      allVideosLoaded = true;
+      loader.style.display = 'none';
+      loading = false;
+    }
+
+    // Обработчик скролла: подгружаем видео при приближении к низу
+    window.addEventListener('scroll', () => {
+      if (allVideosLoaded) return; // если всё загружено — не реагируем
+
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const pageBottom = document.body.offsetHeight - 200;
+
+      if (scrollBottom >= pageBottom) {
+        loadVideos();
+      }
+    });
+
+    // При воспроизведении одного видео ставим остальные на паузу
+    document.addEventListener('play', function (e) {
+      const allVideos = document.querySelectorAll('video');
+      allVideos.forEach(video => {
+        if (video !== e.target) video.pause();
+      });
+    }, true);
+
+    // Первичная загрузка
+    loadVideos();
+  </script>
 </body>
 </html>
