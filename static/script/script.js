@@ -8,11 +8,11 @@ let loading = false;
 const videos = [
     {
         title: "Big Buck Bunny",
-        url: "https://www.w3schools.com/html/mov_bbb.mp4"
+        url: "https://videotourl.com/videos/1776258938636-84af6068-252d-4857-bf60-c7841625d5b1.mp4"
     },
     {
         title: "Sample Video",
-        url: "https://www.w3schools.com/html/movie.mp4"
+        url: "https://videotourl.com/videos/1774408888308-289df404-1679-4bd5-b8ca-c802e53cab99.mp4"
     }
 ];
 
