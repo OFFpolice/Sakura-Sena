@@ -315,11 +315,11 @@
   <!-- HOME -->
   <div class="page active" id="page-home">
     <div class="home-section">
-      <div class="section-label">Видео</div>
+      <div class="section-label">Video</div>
       <div class="thumb-row" id="home-videos"></div>
     </div>
     <div class="home-section">
-      <div class="section-label">Фото</div>
+      <div class="section-label">Photo</div>
       <div class="thumb-row" id="home-photos"></div>
     </div>
     <div class="home-section">
@@ -349,17 +349,17 @@
       <div class="about-avatar">🌸</div>
       <div class="about-name">Sakura Sena</div>
       <p class="about-desc">
-        Неофициальный фан-сайт.<br>
-        Видео, фото и GIF — всё для поклонников.
+        Unofficial fan-site.<br>
+        Video. Photo. GIF — OnlyFans Sakura Sena.
       </p>
       <div class="about-stats">
         <div>
           <div class="stat-num" id="stat-v">0</div>
-          <div class="stat-lbl">Видео</div>
+          <div class="stat-lbl">Video</div>
         </div>
         <div>
           <div class="stat-num" id="stat-p">0</div>
-          <div class="stat-lbl">Фото</div>
+          <div class="stat-lbl">Photo</div>
         </div>
         <div>
           <div class="stat-num" id="stat-g">0</div>
@@ -379,15 +379,15 @@
   <nav class="bottom-nav">
     <button class="nav-item active" data-page="home">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      Главная
+      Home
     </button>
     <button class="nav-item" data-page="video">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-      Видео
+      Video
     </button>
     <button class="nav-item" data-page="photo">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zm-9-3.5-2.5-3-3.5 4.5h11l-5-6.5z"/></svg>
-      Фото
+      Photo
     </button>
     <button class="nav-item" data-page="gif">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H8v-2h6v2zm2-4H8v-2h8v2zm0-4H8V7h8v2z"/></svg>
@@ -395,15 +395,13 @@
     </button>
     <button class="nav-item" data-page="about">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-      О нас
+      About
     </button>
   </nav>
 
   <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
   <script>
-    // ════════════════════════════════
-    //  ДАННЫЕ — замените на свои URL
-    // ════════════════════════════════
+    // ДАННЫЕ — замените на свои URL
     const DATA = {
       videos: [
         { title: "Sakura Sena (1)", url: "https://videotourl.com/videos/1773194712458-1192e4ae-5f5f-4233-94fb-2a2a72f79b02.mp4" },
@@ -436,7 +434,7 @@
 
     const players = [];
 
-    // ─── NAVIGATION ──────────────────────
+    // NAVIGATION
     document.querySelectorAll('.nav-item').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = btn.dataset.page;
@@ -449,7 +447,7 @@
       });
     });
 
-    // ─── LIGHTBOX ────────────────────────
+    // LIGHTBOX
     const lightbox = document.getElementById('lightbox');
     const lbContent = document.getElementById('lb-content');
 
@@ -468,7 +466,7 @@
       document.body.style.overflow = '';
     }
 
-    // ─── HELPERS ─────────────────────────
+    // HELPERS
     function makeImg(url) {
       const el = document.createElement('img');
       el.src = url;
@@ -477,7 +475,7 @@
       return el;
     }
 
-    // ─── HOME ────────────────────────────
+    // HOME
     function initHome() {
       // Video thumbs
       const row = document.getElementById('home-videos');
@@ -530,7 +528,7 @@
       });
     }
 
-    // ─── VIDEO PAGE ──────────────────────
+    // VIDEO PAGE
     function initVideos() {
       const feed = document.getElementById('video-feed');
       DATA.videos.forEach(v => {
@@ -566,7 +564,7 @@
       });
     }
 
-    // ─── PHOTO PAGE ──────────────────────
+    // PHOTO PAGE
     function initPhotos() {
       const grid = document.getElementById('photo-grid');
       DATA.photos.forEach(url => {
@@ -578,7 +576,7 @@
       });
     }
 
-    // ─── GIF PAGE ────────────────────────
+    // GIF PAGE
     function initGifs() {
       const grid = document.getElementById('gif-grid');
       DATA.gifs.forEach(url => {
@@ -597,12 +595,12 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ─── STATS ───────────────────────────
+    // STATS
     document.getElementById('stat-v').textContent = DATA.videos.length;
     document.getElementById('stat-p').textContent = DATA.photos.length;
     document.getElementById('stat-g').textContent = DATA.gifs.length;
 
-    // ─── INIT ────────────────────────────
+    // INIT
     initHome();
     initVideos();
     initPhotos();
