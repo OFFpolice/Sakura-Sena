@@ -491,7 +491,7 @@
         vid.style.pointerEvents = 'none';
         thumb.appendChild(vid);
         thumb.innerHTML += `
-          <div class="thumb-badge video">Видео</div>
+          <div class="thumb-badge video">Video</div>
           <div class="thumb-play-overlay">
             <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
           </div>`;
@@ -507,7 +507,7 @@
         thumb.appendChild(makeImg(url));
         const badge = document.createElement('div');
         badge.className = 'thumb-badge photo';
-        badge.textContent = 'Фото';
+        badge.textContent = 'Photo';
         thumb.appendChild(badge);
         thumb.addEventListener('click', () => openLightbox(url));
         prow.appendChild(thumb);
