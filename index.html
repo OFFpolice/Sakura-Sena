@@ -35,8 +35,7 @@
     * {
         margin: 0;
         padding: 0;
-        box-sizing:
-        border-box;
+        box-sizing: border-box;
         -webkit-user-select: none;
         -webkit-tap-highlight-color: transparent;
         -moz-user-select: none;
@@ -52,7 +51,6 @@
       padding-bottom: var(--nav-h);
     }
 
-    /* HEADER */
     .site-header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -75,7 +73,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* BOTTOM NAV */
     .bottom-nav {
       position: fixed;
       bottom: 0; left: 0; right: 0;
@@ -112,7 +109,6 @@
     .nav-item.active { color: var(--accent); }
     .nav-item.active svg { transform: translateY(-2px); }
 
-    /* PAGES */
     .page { display: none; padding: 12px; animation: fadeIn 0.2s ease; }
     .page.active { display: block; }
 
@@ -121,7 +117,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* SECTION LABEL ROW */
     .section-header {
       display: flex;
       align-items: center;
@@ -143,7 +138,6 @@
       margin: 0 10px;
     }
 
-    /* HOME THUMB ROW */
     .home-section { margin-bottom: 20px; }
 
     .thumb-scroll-wrap {
@@ -159,7 +153,6 @@
       padding-bottom: 4px;
     }
 
-    /* SEE ALL CARD */
     .see-all-card {
       flex: 0 0 90px;
       border-radius: 8px;
@@ -238,7 +231,6 @@
     }
     .thumb-play-overlay svg { width: 32px; height: 32px; }
 
-    /* ── VIDEO PAGE ── */
     #page-video { padding: 0; }
 
     .video-page-header {
@@ -324,7 +316,6 @@
     }
     .video-row-arrow svg { width: 16px; height: 16px; }
 
-    /* VIDEO MODAL PLAYER */
     .video-modal {
       display: none;
       position: fixed;
@@ -401,7 +392,6 @@
       border: 1px solid rgba(255,0,85,0.3);
     }
 
-    /* UP NEXT */
     .up-next-label {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 12px;
@@ -452,7 +442,6 @@
       line-height: 1.4;
     }
 
-    /* Plyr */
     .plyr {
       --plyr-color-main: #ff0055;
       --plyr-video-control-color: #fff;
@@ -464,7 +453,6 @@
     .plyr__control::after,
     .plyr__control::before { display: none !important; }
 
-    /* MEDIA GRID */
     .media-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -481,7 +469,6 @@
     }
     .media-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* LIGHTBOX */
     .lightbox {
       display: none;
       position: fixed;
@@ -509,7 +496,6 @@
     }
     .lightbox img { max-width: 100%; max-height: 85vh; border-radius: 8px; }
 
-    /* ABOUT */
     .about-card {
       background: var(--bg2);
       border-radius: 16px;
@@ -517,23 +503,23 @@
       padding: 28px 20px;
       text-align: center;
     }
-    .about-avatar{
-      width:88px;
-      height:88px;
-      border-radius:50%;
-      margin:0 auto 16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:2px solid rgba(255,0,85,0.3);
-      overflow:hidden;
-      background:linear-gradient(135deg, var(--accent), #660022);
+    .about-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255,0,85,0.3);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--accent), #660022);
     }
-    .about-avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+    .about-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .about-name {
       font-family: 'Bebas Neue', sans-serif;
@@ -560,7 +546,6 @@
     <span class="site-title">Sakura Sena</span>
   </header>
 
-  <!-- HOME -->
   <div class="page active" id="page-home">
     <div class="home-section">
       <div class="section-header">
@@ -591,27 +576,23 @@
     </div>
   </div>
 
-  <!-- VIDEO PAGE -->
   <div class="page" id="page-video">
     <div class="video-page-header">Videos</div>
     <div class="video-list" id="video-list"></div>
   </div>
 
-  <!-- PHOTO -->
   <div class="page" id="page-photo">
     <div class="media-grid" id="photo-grid"></div>
   </div>
 
-  <!-- GIF -->
   <div class="page" id="page-gif">
     <div class="media-grid" id="gif-grid"></div>
   </div>
 
-  <!-- ABOUT -->
   <div class="page" id="page-about">
     <div class="about-card">
       <div class="about-avatar">
-          <img src="https://videotourl.com/images/1777942421604-96004a26-20cf-4bf3-8a04-4c88f2afe0ab.jpeg" alt="Avatar">
+        <img src="https://videotourl.com/images/1777942421604-96004a26-20cf-4bf3-8a04-4c88f2afe0ab.jpeg" alt="Avatar">
       </div>
       <div class="about-name">Sakura Sena</div>
       <p class="about-desc">Unofficial fan-site.<br>Video. Photo. GIF — OnlyFans Sakura Sena.</p>
@@ -632,7 +613,6 @@
     </div>
   </div>
 
-  <!-- VIDEO MODAL PLAYER -->
   <div class="video-modal" id="video-modal">
     <div class="video-modal-topbar">
       <button class="video-modal-back" id="modal-back">
@@ -640,11 +620,7 @@
       </button>
       <span class="video-modal-title" id="modal-title"></span>
     </div>
-    <div class="video-modal-player-wrap">
-      <video id="modal-video" playsinline preload="metadata">
-        <source id="modal-video-src" src="" type="video/mp4">
-      </video>
-    </div>
+    <div class="video-modal-player-wrap" id="video-modal-player-wrap"></div>
     <div class="video-modal-info">
       <div class="video-modal-name" id="modal-name"></div>
       <div class="video-modal-tag">Video</div>
@@ -653,31 +629,25 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lb-close">✕</button>
     <div id="lb-content"></div>
   </div>
 
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <button class="nav-item active" data-page="home">
-      <!-- Home icon -->
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       Home
     </button>
     <button class="nav-item" data-page="video">
-      <!-- Video camera icon -->
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg>
       Video
     </button>
     <button class="nav-item" data-page="photo">
-      <!-- Camera / photo icon -->
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.2A3.2 3.2 0 1 1 12 8.8a3.2 3.2 0 0 1 0 6.4zm7-12H8.83L7 1H4a1 1 0 0 0-1 1v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3zM12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
       Photo
     </button>
     <button class="nav-item" data-page="gif">
-      <!-- Animated / GIF icon (film strip) -->
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 4l2 2h-3l-2-2H13l2 2h-3l-2-2H8l2 2H7L5 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4h-4zM4 18V8h16v10H4zm2-8h2v2H6zm0 4h2v2H6zm12-4h-2v2h2zm0 4h-2v2h2zM9 9h6v6H9z"/></svg>
       GIF
     </button>
@@ -726,14 +696,11 @@
       ]
     };
 
-    // ── MODAL PLAYER ──
     let modalPlayer = null;
 
     function openVideoModal(index) {
       const v = DATA.videos[index];
       const modal = document.getElementById('video-modal');
-      const src = document.getElementById('modal-video-src');
-      const videoEl = document.getElementById('modal-video');
 
       document.getElementById('modal-title').textContent = v.title;
       document.getElementById('modal-name').textContent = v.title;
@@ -743,8 +710,14 @@
         modalPlayer = null;
       }
 
-      src.src = v.url;
-      videoEl.load();
+      const playerWrap = document.getElementById('video-modal-player-wrap');
+      playerWrap.innerHTML = `
+        <video id="modal-video" playsinline preload="metadata">
+          <source src="${v.url}" type="video/mp4">
+        </video>
+      `;
+
+      const videoEl = document.getElementById('modal-video');
 
       modalPlayer = new Plyr(videoEl, {
         controls: ['play-large','play','progress','current-time','mute','volume','fullscreen'],
@@ -782,13 +755,14 @@
         modalPlayer.destroy();
         modalPlayer = null;
       }
+      const playerWrap = document.getElementById('video-modal-player-wrap');
+      playerWrap.innerHTML = '';
       modal.classList.remove('open');
       document.body.style.overflow = '';
     }
 
     document.getElementById('modal-back').addEventListener('click', closeVideoModal);
 
-    // ── NAVIGATION ──
     function navigateTo(page) {
       document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.page === page));
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -800,7 +774,6 @@
       btn.addEventListener('click', () => navigateTo(btn.dataset.page));
     });
 
-    // ── LIGHTBOX ──
     const lightbox = document.getElementById('lightbox');
     const lbContent = document.getElementById('lb-content');
 
@@ -839,9 +812,7 @@
       return card;
     }
 
-    // ── HOME ──
     function initHome() {
-      // Videos — показываем первые 5
       const vrow = document.getElementById('home-videos');
       DATA.videos.slice(0, 5).forEach((v, i) => {
         const thumb = document.createElement('div');
@@ -866,7 +837,6 @@
       });
       vrow.appendChild(makeSeeAllCard('video', 'Videos'));
 
-      // Photos — показываем первые 5
       const prow = document.getElementById('home-photos');
       DATA.photos.slice(0, 5).forEach(url => {
         const thumb = document.createElement('div');
@@ -881,7 +851,6 @@
       });
       prow.appendChild(makeSeeAllCard('photo', 'Photos'));
 
-      // GIFs — показываем первые 5
       const grow = document.getElementById('home-gifs');
       DATA.gifs.slice(0, 5).forEach(url => {
         const thumb = document.createElement('div');
@@ -897,7 +866,6 @@
       grow.appendChild(makeSeeAllCard('gif', 'GIFs'));
     }
 
-    // ── VIDEO LIST PAGE ──
     function initVideoList() {
       const list = document.getElementById('video-list');
       DATA.videos.forEach((v, i) => {
@@ -927,7 +895,6 @@
       });
     }
 
-    // ── PHOTO PAGE ──
     function initPhotos() {
       const grid = document.getElementById('photo-grid');
       DATA.photos.forEach(url => {
@@ -939,7 +906,6 @@
       });
     }
 
-    // ── GIF PAGE ──
     function initGifs() {
       const grid = document.getElementById('gif-grid');
       DATA.gifs.forEach(url => {
@@ -951,12 +917,10 @@
       });
     }
 
-    // STATS
     document.getElementById('stat-v').textContent = DATA.videos.length;
     document.getElementById('stat-p').textContent = DATA.photos.length;
     document.getElementById('stat-g').textContent = DATA.gifs.length;
 
-    // INIT
     initHome();
     initVideoList();
     initPhotos();
